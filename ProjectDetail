@@ -1,0 +1,27 @@
+I. Quản lý Người dùng (API Management)
+Chức năng: Đăng ký, đăng nhập, quản lý người dùng (CRUD), phân quyền người dùng (admin, user).
+Công nghệ: Spring Boot, Spring Boot Oath2 Server, JWT (JSON Web Token), MySQL.
+
+II. Quản lí Hệ Thống Blog (API Management)
+Chức năng: Đăng bài viết, chỉnh sửa bài viết, xóa bài viết, bình luận, tìm kiếm.
+Công nghệ: Spring Boot, Spring Boot Oath2 Server, JWT (JSON Web Token), MySQL.
+
+III. Giao diện blog
+Công nghệ: ...
+
+Roles
+*** Admin Role: This role will have broad access to the system, including the ability to manage all user accounts.
+*** User Role: This role will have limited access, restricted to managing only their own account.
+Permissions
+** Admin Permissions:
+
+* READ_ALL_USERS: Permission to read all user information.
+* UPDATE_ALL_USERS: Permission to update all user information.
+* DELETE_ALL_USERS: Permission to delete any user.
+* SEARCH_ALL_USERS: Permission to search for any user.
+** User Permissions:
+
+* READ_OWN_INFO: Permission to read their own information.
+* UPDATE_OWN_INFO: Permission to update their own information.
+* DELETE_OWN_INFO: Permission to delete their own account.
+* SEARCH_OWN_INFO: Permission to search their own information.

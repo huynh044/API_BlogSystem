@@ -1,0 +1,34 @@
+package com.apimobilestore.entity;
+
+
+import java.util.Set;
+
+
+import jakarta.persistence.*;
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.experimental.FieldDefaults;
+
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@FieldDefaults(level = AccessLevel.PRIVATE)
+@Entity
+@Builder
+public class Role {
+	@Id
+	String name;
+	
+	String description;
+	
+	@ManyToMany
+	@JoinTable(
+	        name = "role_permissions",
+	        joinColumns = @JoinColumn(name = "role_name"),
+	        inverseJoinColumns = @JoinColumn(name = "permission_name")
+	    )
+	Set<Permission> permissions;
+}
