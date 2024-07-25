@@ -22,7 +22,10 @@ public enum ErrorCode {
     UNAUTHORIZED(1007, "You do not have permission", HttpStatus.FORBIDDEN),
     UNDEFINEPERMISSION(1008,"Undefine permission",HttpStatus.NOT_FOUND),
     UNDEFINEROLE(1009,"Undefine role", HttpStatus.NOT_FOUND), 
-    DUPLICATE_PERMISSION(1010,"Permission already exists",HttpStatus.BAD_REQUEST)
+    DUPLICATE_PERMISSION(1010,"Permission already exists",HttpStatus.BAD_REQUEST),
+    DUPLICATE_ROLE(1011,"Role already exists",HttpStatus.BAD_REQUEST),
+    ROLE_NOT_EXISTED(1012,"Role not existed",HttpStatus.NOT_FOUND),
+    PERMISSION_NOT_EXISTED(1013,"Permission not existed",HttpStatus.NOT_FOUND)
 	;
 	int code;
 	String message;

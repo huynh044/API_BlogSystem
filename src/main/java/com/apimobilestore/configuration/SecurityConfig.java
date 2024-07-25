@@ -4,7 +4,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Lazy;
-import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -22,58 +21,56 @@ import org.springframework.web.filter.CorsFilter;
 @EnableWebSecurity
 @EnableMethodSecurity
 public class SecurityConfig {
-	private final String[] PUBLIC_ENDPOINTS = {
-            "/user/create", "/auth/login", "/auth/introspect", "/auth/logout", "/auth/refresh","/swagger-ui.html"
+    private final String[] PUBLIC_ENDPOINTS = {
+            "/user/create", "/auth/login", "/auth/introspect", "/auth/logout", "/auth/refresh",
+            "/swagger-ui.html", "/swagger-ui/**", "/v3/api-docs/**"
     };
-	
-	@Autowired
-	JwtDecode jwtDecode;
-	
-	@Bean
-	SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
-		httpSecurity.authorizeHttpRequests(request -> request.requestMatchers(HttpMethod.POST, PUBLIC_ENDPOINTS)
-																.permitAll()
-																.anyRequest()
-																.authenticated());
-		httpSecurity.csrf(AbstractHttpConfigurer::disable);
-		httpSecurity.oauth2ResourceServer(oath2 -> oath2.jwt(jwtConfigurer -> jwtConfigurer
-				.decoder(jwtDecode)
-				.jwtAuthenticationConverter(jwtAuthenticationConverter()))
-				.authenticationEntryPoint(new JwtAuthenticationEntryPoint()));
-		return httpSecurity.build();
-	}
-	
-	 @Bean
-	    JwtAuthenticationConverter jwtAuthenticationConverter() {
-	        JwtGrantedAuthoritiesConverter jwtGrantedAuthoritiesConverter = new JwtGrantedAuthoritiesConverter();
-	        jwtGrantedAuthoritiesConverter.setAuthorityPrefix("");
 
-	        JwtAuthenticationConverter jwtAuthenticationConverter = new JwtAuthenticationConverter();
-	        jwtAuthenticationConverter.setJwtGrantedAuthoritiesConverter(jwtGrantedAuthoritiesConverter);
+    @Autowired
+    JwtDecode jwtDecode;
 
-	        return jwtAuthenticationConverter;
-	    }
-	 
-	 @Bean
-	    CorsFilter corsFilter(){
-	        CorsConfiguration corsConfiguration = new CorsConfiguration();
+    @Bean
+    SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
+        httpSecurity.authorizeHttpRequests(request -> request
+                .requestMatchers(PUBLIC_ENDPOINTS).permitAll()
+                .anyRequest().authenticated()
+        );
+        httpSecurity.csrf(AbstractHttpConfigurer::disable);
+        httpSecurity.oauth2ResourceServer(oauth2 -> oauth2.jwt(jwtConfigurer -> jwtConfigurer
+                .decoder(jwtDecode)
+                .jwtAuthenticationConverter(jwtAuthenticationConverter()))
+                .authenticationEntryPoint(new JwtAuthenticationEntryPoint()));
+        return httpSecurity.build();
+    }
 
-	        corsConfiguration.addAllowedOrigin("*");
-	        corsConfiguration.addAllowedMethod("*");
-	        corsConfiguration.addAllowedHeader("*");
+    @Bean
+    JwtAuthenticationConverter jwtAuthenticationConverter() {
+        JwtGrantedAuthoritiesConverter jwtGrantedAuthoritiesConverter = new JwtGrantedAuthoritiesConverter();
+        jwtGrantedAuthoritiesConverter.setAuthorityPrefix("");
 
-	        UrlBasedCorsConfigurationSource urlBasedCorsConfigurationSource = new UrlBasedCorsConfigurationSource();
-	        urlBasedCorsConfigurationSource.registerCorsConfiguration("/**", corsConfiguration);
+        JwtAuthenticationConverter jwtAuthenticationConverter = new JwtAuthenticationConverter();
+        jwtAuthenticationConverter.setJwtGrantedAuthoritiesConverter(jwtGrantedAuthoritiesConverter);
 
-	        return new CorsFilter(urlBasedCorsConfigurationSource);
-	    }
-	
-	// generate encode password
+        return jwtAuthenticationConverter;
+    }
+
+    @Bean
+    CorsFilter corsFilter(){
+        CorsConfiguration corsConfiguration = new CorsConfiguration();
+
+        corsConfiguration.addAllowedOrigin("*");
+        corsConfiguration.addAllowedMethod("*");
+        corsConfiguration.addAllowedHeader("*");
+
+        UrlBasedCorsConfigurationSource urlBasedCorsConfigurationSource = new UrlBasedCorsConfigurationSource();
+        urlBasedCorsConfigurationSource.registerCorsConfiguration("/**", corsConfiguration);
+
+        return new CorsFilter(urlBasedCorsConfigurationSource);
+    }
+
     @Bean
     @Lazy
     PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder(10);
     }
-    
-    
 }

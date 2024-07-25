@@ -5,7 +5,6 @@ import com.apimobilestore.dto.request.UserUpdate;
 import com.apimobilestore.dto.response.ApiResponse;
 import com.apimobilestore.dto.response.UserResponse;
 import com.apimobilestore.service.UserService;
-import java.util.List;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -33,32 +32,26 @@ public class UserController {
 				.build();
 	}
 	
-	@PutMapping("/update/{username}")
-	ApiResponse<UserResponse> updateUser(@PathVariable String username, @RequestBody UserUpdate request){
+	@PutMapping("/update")
+	ApiResponse<UserResponse> updateUser(@RequestBody UserUpdate request){
 		return ApiResponse.<UserResponse>builder()
-				.result(service.updateUser(username, request))
+				.result(service.updateUser(request))
 				.build();
 	}
 	
-	@GetMapping("/info/{username}")
-	ApiResponse<UserResponse> getInfo(@PathVariable String username){
-		return ApiResponse.<UserResponse>builder()
-				.result(service.getInfo(username))
-				.build();
-	}
 	
-	@GetMapping("/getAllUsers")
-	ApiResponse<List<UserResponse>> getAllUsers(){
-		return ApiResponse.<List<UserResponse>>builder()
-				.result(service.getAllUser())
-				.build();
-	}
-	
-	@DeleteMapping("/delete/{username}")
-	ApiResponse<?> deleteUser(@PathVariable String username){
-		service.deleteUser(username);
+	@DeleteMapping("/delete")
+	ApiResponse<?> deleteUser(){
+		service.deleteUser();
 		return ApiResponse.builder()
 				.message("Account has been deleted")
+				.build();
+	}
+	
+	@GetMapping("/getMyInfo")
+	ApiResponse<UserResponse> getMyInfo(){
+		return ApiResponse.<UserResponse>builder()
+				.result(service.getMyInfo())
 				.build();
 	}
 	

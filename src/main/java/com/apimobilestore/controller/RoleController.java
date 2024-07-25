@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.apimobilestore.dto.request.RoleResquest;
+import com.apimobilestore.dto.request.UpdateRoleRequest;
 import com.apimobilestore.dto.response.ApiResponse;
 import com.apimobilestore.dto.response.RoleResponse;
 import com.apimobilestore.service.RoleService;
@@ -26,10 +27,17 @@ import lombok.experimental.FieldDefaults;
 public class RoleController {
 	RoleService roleService;
 	
-	@PostMapping("/update")
-	ApiResponse<RoleResponse> updateRole (@RequestBody RoleResquest roleResquest){
+	@PostMapping("/create")
+	ApiResponse<RoleResponse> createRole (@RequestBody RoleResquest roleResquest){
 		return ApiResponse.<RoleResponse>builder()
 				.result(roleService.createResponse(roleResquest))
+				.build();
+	}
+	
+	@PostMapping("update")
+	ApiResponse<RoleResponse> updateRole (@RequestBody UpdateRoleRequest roleResquest){
+		return ApiResponse.<RoleResponse>builder()
+				.result(roleService.updateResponse(roleResquest))
 				.build();
 	}
 	
