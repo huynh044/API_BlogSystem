@@ -15,7 +15,10 @@ public interface UserMapper {
     @Mapping(target = "createdAt", ignore = true)
     @Mapping(target = "updatedAt", ignore = true)
     @Mapping(target = "roles", ignore = true)
+	@Mapping(target = "comments", ignore = true)
+	@Mapping(target = "posts", ignore = true)
 	User toUser(UserCreation userCreation);
+	
 	UserResponse toUserResponse(User user);
 	
 	@Mapping(target = "createdAt", ignore = true)
@@ -23,5 +26,7 @@ public interface UserMapper {
     @Mapping(target = "uid", ignore = true)
     @Mapping(target = "username", ignore = true)
     @Mapping(target = "roles", ignore = true)
+	@Mapping(target = "comments", ignore = true)
+	@Mapping(target = "posts", ignore = true)
 	void updateUser(@MappingTarget User user, UserUpdate userUpdate);
 }

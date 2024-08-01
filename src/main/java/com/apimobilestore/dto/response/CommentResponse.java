@@ -1,6 +1,5 @@
 package com.apimobilestore.dto.response;
 
-
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,11 +8,13 @@ import lombok.NoArgsConstructor;
 import lombok.experimental.FieldDefaults;
 
 @Data
-@Builder
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class PermissionResponse {
-	 String name;
-	 String description;
+@Builder
+public class CommentResponse {
+	String id;
+	String content;
+	String postId;
+	String authorName;
 }

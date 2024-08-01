@@ -22,7 +22,7 @@ import org.springframework.web.filter.CorsFilter;
 @EnableMethodSecurity
 public class SecurityConfig {
     private final String[] PUBLIC_ENDPOINTS = {
-            "/user/create", "/auth/login", "/auth/introspect", "/auth/logout", "/auth/refresh",
+            "api/user", "api/auth", "api/auth/verify", "api/auth/logout", "api/auth/refresh",
             "/swagger-ui.html", "/swagger-ui/**", "/v3/api-docs/**"
     };
 

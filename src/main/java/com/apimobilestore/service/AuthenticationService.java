@@ -21,7 +21,6 @@ import com.apimobilestore.dto.request.RefreshRequest;
 import com.apimobilestore.dto.response.AuthenticationResponse;
 import com.apimobilestore.dto.response.IntrospectResponse;
 import com.apimobilestore.entity.InvalidatedToken;
-import com.apimobilestore.entity.Permission;
 import com.apimobilestore.entity.User;
 import com.apimobilestore.exception.AppException;
 import com.apimobilestore.exception.ErrorCode;
@@ -204,11 +203,6 @@ class AuthenticationServiceImpl implements AuthenticationService {
                 .stream()
                 .forEach(role -> {
                     stringJoiner.add("ROLE_" + role.getName().toUpperCase());
-                    Optional.ofNullable(role.getPermissions())
-                            .orElse(Set.of())
-                            .stream()
-                            .map(Permission::getName)
-                            .forEach(stringJoiner::add);
                 });
 
         return stringJoiner.toString();

@@ -25,7 +25,9 @@ public enum ErrorCode {
     DUPLICATE_PERMISSION(1010,"Permission already exists",HttpStatus.BAD_REQUEST),
     DUPLICATE_ROLE(1011,"Role already exists",HttpStatus.BAD_REQUEST),
     ROLE_NOT_EXISTED(1012,"Role not existed",HttpStatus.NOT_FOUND),
-    PERMISSION_NOT_EXISTED(1013,"Permission not existed",HttpStatus.NOT_FOUND)
+    PERMISSION_NOT_EXISTED(1013,"Permission not existed",HttpStatus.NOT_FOUND),
+    POST_NOT_EXISTED(1014,"Post not existed", HttpStatus.NOT_FOUND),
+    COMMENT_NOT_EXISTED(1015,"Comment not existed", HttpStatus.NOT_FOUND)
 	;
 	int code;
 	String message;

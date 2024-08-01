@@ -25,7 +25,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 @RestController
-@RequestMapping("/auth")
+@RequestMapping("/api/auth")
 @RequiredArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class AuthenticationController {
@@ -33,7 +33,7 @@ public class AuthenticationController {
     AuthenticationService service;
     static final Logger logger = LoggerFactory.getLogger(AuthenticationController.class);
 	
-    @PostMapping("/login")
+    @PostMapping
     ApiResponse<AuthenticationResponse> login(@Valid @RequestBody AuthenticationRequest request){
         logger.info("Login request received for user: {}", request.getUsername());
         AuthenticationResponse result = service.Authenticate(request);
@@ -42,7 +42,7 @@ public class AuthenticationController {
                 .build();
     }
 	
-    @PostMapping("/introspect")
+    @PostMapping("/verify")
     ApiResponse<IntrospectResponse> introspect(@Valid @RequestBody IntrospectRequest request) throws ParseException, JOSEException{
         logger.info("Introspect request received for token: {}", request.getToken());
         IntrospectResponse result = service.introspectResponse(request);

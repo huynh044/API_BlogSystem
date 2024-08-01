@@ -1,6 +1,5 @@
 package com.apimobilestore.dto.request;
 
-import java.util.Set;
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -15,5 +14,4 @@ import lombok.experimental.FieldDefaults;
 public class RoleResquest {
 	String name;
     String description;
-    Set<String> permissions;
 }

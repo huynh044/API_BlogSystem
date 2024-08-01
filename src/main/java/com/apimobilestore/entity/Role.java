@@ -1,9 +1,6 @@
 package com.apimobilestore.entity;
 
 
-import java.util.Set;
-
-
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -24,11 +21,11 @@ public class Role {
 	
 	String description;
 	
-	@ManyToMany
-	@JoinTable(
-	        name = "role_permissions",
-	        joinColumns = @JoinColumn(name = "role_name"),
-	        inverseJoinColumns = @JoinColumn(name = "permission_name")
-	    )
-	Set<Permission> permissions;
+	/*
+	 * @ManyToMany(fetch = FetchType.EAGER)
+	 * 
+	 * @JoinTable( name = "role_permissions", joinColumns = @JoinColumn(name =
+	 * "role_name"), inverseJoinColumns = @JoinColumn(name = "permission_name") )
+	 * Set<Permission> permissions;
+	 */
 }

@@ -1,8 +1,5 @@
-package com.apimobilestore.entity;
+package com.apimobilestore.dto.request;
 
-
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -13,10 +10,6 @@ import lombok.experimental.FieldDefaults;
 @NoArgsConstructor
 @AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
-@Entity
-public class Permission {
-	@Id
-    String name;
-
-    String description;
+public class CommentRequest {
+	String content;
 }

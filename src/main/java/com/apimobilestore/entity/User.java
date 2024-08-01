@@ -1,6 +1,8 @@
 package com.apimobilestore.entity;
 
 import java.time.Instant;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 import jakarta.persistence.*;
 import lombok.*;
@@ -23,6 +25,14 @@ public class User {
     String password;
     Instant createdAt;
     Instant updatedAt;
+    
+    @OneToMany(mappedBy = "author", cascade = CascadeType.ALL, orphanRemoval = true)
+    @Builder.Default
+    private List<Post> posts = new ArrayList<>();
+    
+    @OneToMany(mappedBy = "author", cascade = CascadeType.ALL, orphanRemoval = true)
+    @Builder.Default
+    private List<Comment> comments = new ArrayList<>();
     
     @ManyToMany
     @JoinTable(

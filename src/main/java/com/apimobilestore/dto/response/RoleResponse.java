@@ -1,6 +1,5 @@
 package com.apimobilestore.dto.response;
 
-import java.util.Set;
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -17,5 +16,4 @@ import lombok.experimental.FieldDefaults;
 public class RoleResponse {
 	String name;
     String description;
-    Set<PermissionResponse> permissions;
 }

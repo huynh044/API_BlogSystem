@@ -5,26 +5,25 @@ services:
     image: mysql:8.0
     container_name: mysql
     environment:
-      DATABASE_HOST : docker_mysql
-      DATABASE_PORT : 3306
       MYSQL_ROOT_PASSWORD: huynh
-      MYSQL_DATABASE: blogsystemdb
-      MYSQL_USER : huynh
-      MYSQL_PASSWORD : huynh
+      MYSQL_DATABASE: docker
+    ports:
+      - '3306:3306'
     volumes:
       - mysql-data:/var/lib/mysql
 
-  blogsystemapi:
-    build: .
-    container_name: blogsystemapi
-    environment:
-      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/blogsystemdb?createDatabaseIfNotExist=true
-      SPRING_DATASOURCE_USERNAME: huynh
-      SPRING_DATASOURCE_PASSWORD: huynh
-    ports:
-      - "8080:8080"
-    depends_on:
-      - mysql
-
 volumes:
   mysql-data:
+
+      
+#  blogsystemapi:
+#    build: .
+#    container_name: blogsystemapi
+#    environment:
+#      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/blogsystemdb?createDatabaseIfNotExist=true
+#      SPRING_DATASOURCE_USERNAME: huynh
+#      SPRING_DATASOURCE_PASSWORD: huynh
+#    ports:
+#      - "8080:8080"
+#    depends_on:
+#      - mysql

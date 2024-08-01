@@ -2,10 +2,12 @@ package com.apimobilestore;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.context.annotation.Import;
+import org.springframework.test.context.ActiveProfiles;
 
-@Import(TestcontainersConfiguration.class)
-@SpringBootTest
+
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 class ApiMobileStoreApplicationTests {
 
 	@Test

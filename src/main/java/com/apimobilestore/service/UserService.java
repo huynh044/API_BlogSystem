@@ -2,7 +2,6 @@ package com.apimobilestore.service;
 
 import java.util.HashSet;
 
-import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -45,25 +44,28 @@ class UserServiceImpl implements UserService{
 	@Override
 	@Transactional
 	public UserResponse createUser(UserCreation request) {
+		if(userRepository.existsByUsername(request.getUsername())) {
+			throw new AppException(ErrorCode.USER_EXISTED);
+		}
 		User user = mapper.toUser(request);
+		
         user.setPassword(passwordEncoder.encode(request.getPassword()));
 
         HashSet<Role> roles = new HashSet<>();
         roleRepository.findById(Roles.USER.name()).ifPresent(roles::add);
+        roleRepository.findById(Roles.AUTHOR.name()).ifPresent(roles::add);
+        roleRepository.findById(Roles.VIEWER.name()).ifPresent(roles::add);
+        
         
 
         user.setRoles(roles);
 
-        try {
-            user = userRepository.save(user);
-        } catch (DataIntegrityViolationException exception){
-            throw new AppException(ErrorCode.USER_EXISTED);
-        }
-		return mapper.toUserResponse(user);
+		return mapper.toUserResponse(userRepository.save(user));
 	}
 
 	@Override
 	@Transactional
+	@PreAuthorize("hasRole('USER')")
 	public UserResponse updateUser(UserUpdate request) {
 		var context = SecurityContextHolder.getContext();
 		String username = context.getAuthentication().getName();
@@ -76,6 +78,7 @@ class UserServiceImpl implements UserService{
 	
 
 	@Override
+	@PreAuthorize("hasRole('USER')")
 	public UserResponse getMyInfo() {
 		var context = SecurityContextHolder.getContext();
 		String username = context.getAuthentication().getName();
@@ -85,6 +88,8 @@ class UserServiceImpl implements UserService{
 	}
 
 	@Override
+	@PreAuthorize("hasRole('USER')")
+	@Transactional
 	public void deleteUser() {
 		var context = SecurityContextHolder.getContext();
 		String username = context.getAuthentication().getName();
