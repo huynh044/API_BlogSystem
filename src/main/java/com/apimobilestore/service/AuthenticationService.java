@@ -63,6 +63,7 @@ class AuthenticationServiceImpl implements AuthenticationService {
     
     @Override
     public AuthenticationResponse Authenticate(AuthenticationRequest request) {
+    	log.info(SIGNER_KEY);
     	PasswordEncoder encoder = new BCryptPasswordEncoder(10);
         var user = repository.findByUsername(request.getUsername())
                 .orElseThrow(() -> new AppException(ErrorCode.USER_NOT_EXISTED));

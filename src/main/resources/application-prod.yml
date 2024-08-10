@@ -1,0 +1,8 @@
+jwt:
+  signerKey: ${SIGNER_KEY}
+  expirationTime: 2
+account:
+  admin:
+    username: ${USERNAME_ADMIN}
+    password: ${PASSWORD_ADMIN}
+    

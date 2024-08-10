@@ -12,18 +12,21 @@ services:
     volumes:
       - mysql-data:/var/lib/mysql
 
+  apiblog:
+    image: apiblog
+    build: .
+    container_name: apiblog
+    environment:
+      DATASOURCE_URL: jdbc:mysql://mysql:3306/blogsystemdb?createDatabaseIfNotExist=true
+      DATABASE_USERNAME: root
+      DATABASE_PASSWORD: huynh
+      SIGNER_KEY: Z90zsVhnvZB0snKg2ntwlh8RDn3TH23YsSZey6BrPcSeaFBj1AUJE4zc06F3U0i3
+      USERNAME_ADMIN: huynhdz
+      PASSWORD_ADMIN: huynhdz
+    ports:
+      - "8080:8080"
+    depends_on:
+      - mysql
+
 volumes:
   mysql-data:
-
-      
-#  blogsystemapi:
-#    build: .
-#    container_name: blogsystemapi
-#    environment:
-#      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/blogsystemdb?createDatabaseIfNotExist=true
-#      SPRING_DATASOURCE_USERNAME: huynh
-#      SPRING_DATASOURCE_PASSWORD: huynh
-#    ports:
-#      - "8080:8080"
-#    depends_on:
-#      - mysql

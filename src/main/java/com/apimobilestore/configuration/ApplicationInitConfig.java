@@ -44,6 +44,7 @@ public class ApplicationInitConfig {
 	ApplicationRunner applicationRunner(UserRepository userRepository, RoleRepository roleRepository) {
 		log.info("Initializing application.....");
 		
+		
         return args -> {
         	Role newRole = new Role();
         	for (Roles role : Roles.values()) {

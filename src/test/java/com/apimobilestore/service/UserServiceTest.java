@@ -18,6 +18,7 @@ import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.TestPropertySource;
 
 import com.apimobilestore.dto.request.UserCreation;
+import com.apimobilestore.dto.request.UserUpdate;
 import com.apimobilestore.dto.response.UserResponse;
 import com.apimobilestore.entity.Role;
 import com.apimobilestore.entity.User;
@@ -64,6 +65,10 @@ public class UserServiceTest {
     	);
     }
     
+    private UserUpdate userUpdate() {
+    	return new UserUpdate("huynh2004","huynh","huynh");
+    }
+    
     private User user = new User();
     private Role role = new Role();
 	
@@ -91,7 +96,7 @@ public class UserServiceTest {
 	}
 	
 	@Test
-	@WithMockUser(username = "huynh2004", authorities = {"VIEW_OWN_ACCOUNT","ALL_PERMISSION"})
+	@WithMockUser(username = "huynh2004", roles = "USER")
 	void when_getMyInfo_returnSuccess() {
 		when(userRepository.findByUsername(anyString())).thenReturn(Optional.of(user));
 		when(userMapper.toUserResponse(user)).thenReturn(userResponse());
@@ -102,13 +107,34 @@ public class UserServiceTest {
 	}
 	
 	@Test
-	@WithMockUser(username = "huynh2004", authorities = {"VIEW_OWN_ACCOUNT","ALL_PERMISSION"})
+	@WithMockUser(username = "huynh2004", roles = "USER")
 	void when_getMyInfo_returnException() {
 		when(userRepository.findByUsername(anyString())).thenReturn(Optional.ofNullable(null));
 		
 		var exception = assertThrows(AppException.class, () -> userService.getMyInfo());
 		
 		Assertions.assertThat(exception.getMessage()).isEqualTo("User not existed");
+	}
+	
+	@Test
+	@WithMockUser(username = "huynh2004", roles = "USER")
+	void when_updateUser_returnSucesc() {
+		when(userRepository.findByUsername(anyString())).thenReturn(Optional.of(user));
+		userMapper.updateUser(user, userUpdate());
+		when(passwordEncoder.encode(anyString())).thenReturn("encoded");
+		when(userRepository.save(any())).thenReturn(user);
+		when(userMapper.toUserResponse(user)).thenReturn(userResponse());
+		
+		
+		var response = userService.updateUser(userUpdate());
+		
+		Assertions.assertThat(response.getUid()).isEqualTo("123456");
+	}
+	
+	@Test
+	@WithMockUser(username = "huynh2004", roles = "USER")
+	void when_deleteUser_returnSuccess() {
+		userRepository.deleteByUsername(anyString());
 	}
 
 }

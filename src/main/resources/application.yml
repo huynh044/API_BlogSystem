@@ -1,8 +1,8 @@
 spring:
   application:
-    name: APIMobileStore
+    name: APIBlog
   datasource:
-    url: ${DATASOURCE_URL:jdbc:mysql://localhost:3306/blogsystemdb?createDatabaseIfNotExist=true}
+    url: ${DATASOURCE_URL:jdbc:mysql://localhost:3306/blogsystemdb}
     username: ${DATABASE_USERNAME:root}
     password: ${DATABASE_PASSWORD:huynh}
     driverClassName: com.mysql.cj.jdbc.Driver
@@ -13,15 +13,12 @@ spring:
     properties:
       hibernate:
         dialect: org.hibernate.dialect.MySQLDialect
+  profiles:
+    active:
+    - prod
 server:
   port: 8080
 springdoc:
   swagger-ui:
     path: /swagger-ui.html
-jwt:
-  signerKey: qL">!:j[qhkRR9"l+;1kfT/ye5d<Y"R:VTA[!Qt#zQmbIPlmQ"/mHjVdz);zuv`
-  expirationTime: 1
-account:
-  admin:
-    username: admin
-    password: admin
+

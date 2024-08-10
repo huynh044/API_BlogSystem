@@ -21,6 +21,7 @@ public class User {
     
     String firstname;
     String lastname;
+    @Column(unique = true)
     String username;
     String password;
     Instant createdAt;
