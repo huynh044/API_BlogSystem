@@ -21,4 +21,11 @@ server:
 springdoc:
   swagger-ui:
     path: /swagger-ui.html
+jwt:
+  signerKey: Tn3SNVDZ8b36p6qZC6KU8JPbn5JIDPO4RVd14UmWqGEGdXqIsJykF9ySm15Kd1nS3gtJwBPDrRS7RUvuH082JlXkmaTPUOqPxI8zmjhzhc4gYTcv7tqbPk8c0P9RXkwOpLaZkNf0WCPx6eDs7Z5QhJtPq9SI3nHHG48Zn4SOVVnBWbtzMhr0YlZXlWSvuTTKrRD5nOczZRtANcEe7xS4Yx1StmxqIPFGF6MZvqYxNNs8qucSN3uAK83JyRUXj0mW
+  expirationTime: 1
+account:
+  admin:
+    username: admin
+    password: admin
 
