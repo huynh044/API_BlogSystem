@@ -27,7 +27,7 @@
 1. **Kéo image từ DockerHub**
 ```bash
 docker pull peoplewho/apiblog
-
+```
 2.
 
 
