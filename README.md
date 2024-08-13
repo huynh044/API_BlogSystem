@@ -23,11 +23,16 @@
 - **Kiểm thử**:
   - JUnit
   - Mockito
+## Biến môi trường
+- DATASOURCE_URL, DATABASE_USERNAME, DATABASE_PASSWORD, JWT_SIGNERKEY, ACCOUNT_ADMIN_USERNAME, ACCOUNT_ADMIN_PASSWORD
 ## Hướng dẫn chạy chương trình bằng Docker
 1. **Kéo image từ DockerHub**
 ```bash
 docker pull peoplewho/apiblog
 ```
-2.
+2. **Chạy câu lệnh sau để run image**
+```bash
+docker run -p 8080:8080 -e DATASOURCE_URL={your-datasource} -e DATABASE_USERNAME={your-username-DB} -e DATABASE_PASSWORD={your-password-DB} peoplewho/apiblog
+```
 
 
