@@ -25,7 +25,9 @@
   - Mockito
 ## Hướng dẫn chạy chương trình bằng Docker
 1. **Kéo image từ DockerHub**
-```bash```
+```bash
 docker pull peoplewho/apiblog
+
+2.
 
 
