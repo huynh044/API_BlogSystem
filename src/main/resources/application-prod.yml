@@ -1,4 +1,7 @@
 jwt:
   expirationTime: 2
-
+account:
+  admin:
+    username: admin # default
+    password: admin # default
     

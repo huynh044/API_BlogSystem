@@ -2,7 +2,7 @@ spring:
   application:
     name: APIBlog
   datasource:
-    url: ${DATASOURCE_URL:jdbc:mysql://localhost:3306/blogsystemdb}
+    url: ${DATASOURCE_URL:jdbc:mysql://localhost:3306/blogsystemdb?createDatabaseIfNotExist=true}
     username: ${DATABASE_USERNAME:root}
     password: ${DATABASE_PASSWORD:huynh}
     driverClassName: com.mysql.cj.jdbc.Driver
@@ -26,6 +26,7 @@ jwt:
   expirationTime: 1
 account:
   admin:
-    username: admin
-    password: admin
+    username: admin # default
+    password: admin # default
+
 

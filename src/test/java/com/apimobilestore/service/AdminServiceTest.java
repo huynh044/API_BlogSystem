@@ -1,7 +1,11 @@
 package com.apimobilestore.service;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.Mockito.never;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import java.util.Optional;
@@ -19,6 +23,8 @@ import com.apimobilestore.dto.request.PostRequest;
 import com.apimobilestore.dto.request.UserUpdate;
 import com.apimobilestore.dto.response.UserResponse;
 import com.apimobilestore.entity.User;
+import com.apimobilestore.exception.AppException;
+import com.apimobilestore.exception.ErrorCode;
 import com.apimobilestore.mapper.CommentMapper;
 import com.apimobilestore.mapper.PostMapper;
 import com.apimobilestore.mapper.UserMapper;
@@ -78,5 +84,16 @@ public class AdminServiceTest {
 		var response = adminService.getInfo(anyString());
 		
 		Assertions.assertThat(response.getUid()).isEqualTo("123456");
+	}
+	
+	@Test
+	@WithMockUser(username = "huynh2004", roles = "ADMIN")
+	void when_getInfo_returnNoOne() {
+		when(userRepository.findByUsername(anyString())).thenReturn(Optional.empty());
+		
+		AppException exception = assertThrows(AppException.class, () -> adminService.getInfo(anyString()));
+		assertEquals(ErrorCode.USER_NOT_EXISTED, exception.getErrorCode());
+		verify(userRepository).findByUsername(anyString());
+        verify(userMapper, never()).toUserResponse(any());
 	}
 }

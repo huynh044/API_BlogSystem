@@ -23,6 +23,7 @@ import com.apimobilestore.repository.UserRepository;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
+import lombok.extern.slf4j.Slf4j;
 
 public interface CommentService {
 	CommentResponse createComment(String postId,CommentRequest commentRequest);
@@ -34,6 +35,7 @@ public interface CommentService {
 @Service
 @RequiredArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
+@Slf4j
 class CommentServiceImpl implements CommentService{
 	PostRepository postRepository;
 	UserRepository userRepository;
@@ -44,20 +46,16 @@ class CommentServiceImpl implements CommentService{
 	@PreAuthorize("hasRole('VIEWER')")
 	@Transactional
 	public CommentResponse createComment(String postId,CommentRequest commentRequest) {
-		try {
-			var context = SecurityContextHolder.getContext();
-			String username = context.getAuthentication().getName();
-			User user = userRepository.findByUsername(username)
-					.orElseThrow(() -> new AppException(ErrorCode.USER_NOT_EXISTED));
-			Post post = postRepository.findById(postId)
-					.orElseThrow(() -> new AppException(ErrorCode.POST_NOT_EXISTED));
-			Comment comment = commentMapper.toComment(commentRequest);
-			comment.setAuthor(user);
-			comment.setPost(post);
-			return commentMapper.toResponse(commentRepository.save(comment));
-		}catch(RuntimeException e) {
-			throw new AppException(ErrorCode.UNAUTHORIZED);
-		}
+		var context = SecurityContextHolder.getContext();
+		String username = context.getAuthentication().getName();
+		User user = userRepository.findByUsername(username)
+				.orElseThrow(() -> new AppException(ErrorCode.USER_NOT_EXISTED));
+		Post post = postRepository.findById(postId)
+				.orElseThrow(() -> new AppException(ErrorCode.POST_NOT_EXISTED));
+		Comment comment = commentMapper.toComment(commentRequest);
+		comment.setAuthor(user);
+		comment.setPost(post);
+		return commentMapper.toResponse(commentRepository.save(comment));
 		
 		
 	}
@@ -66,20 +64,16 @@ class CommentServiceImpl implements CommentService{
 	@Transactional
 	@PreAuthorize("hasRole('VIEWER')")
 	public CommentResponse updateComment(String id, CommentRequest commentRequest) {
-		try {
-			var context = SecurityContextHolder.getContext();
-	        String username = context.getAuthentication().getName();
-	        User user = userRepository.findByUsername(username)
-					.orElseThrow(() -> new AppException(ErrorCode.USER_NOT_EXISTED));
-	        Comment comment = commentRepository.findById(id).orElseThrow();
-	        if(!comment.getAuthor().getUid().equals(user.getUid())) {
-	        	throw new AppException(ErrorCode.COMMENT_NOT_EXISTED);
-	        }
-	        comment.setContent(commentRequest.getContent());
-			return commentMapper.toResponse(commentRepository.save(comment));
-		}catch(RuntimeException e) {
-			throw new AppException(ErrorCode.UNAUTHORIZED);
-		}
+		var context = SecurityContextHolder.getContext();
+        String username = context.getAuthentication().getName();
+        User user = userRepository.findByUsername(username)
+				.orElseThrow(() -> new AppException(ErrorCode.USER_NOT_EXISTED));
+        Comment comment = commentRepository.findById(id).orElseThrow();
+        if(!comment.getAuthor().getUid().equals(user.getUid())) {
+        	throw new AppException(ErrorCode.COMMENT_NOT_EXISTED);
+        }
+        comment.setContent(commentRequest.getContent());
+		return commentMapper.toResponse(commentRepository.save(comment));
 		
 	}
 
