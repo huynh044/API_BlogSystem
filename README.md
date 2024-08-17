@@ -13,7 +13,7 @@
 - Tạo, sửa, xóa, cập nhật bình luận đối với tài khoản VIEWER
 ## Công nghệ
 - **Ngôn ngữ**: Java JDK 17 
-- **Frameworks** : Spring Boot
+- **Frameworks** : Spring Boot (Spring Security, Spring Web, Spring JPA, Spring JDBC)
 - **Thư Viện**:
   - Lombok 
   - MapStruct 
